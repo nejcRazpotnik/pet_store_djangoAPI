@@ -84,7 +84,6 @@ DATABASES = {
         'OPTIONS': {
             'service': 'pet_store',
         },
-        'PASSWORD': 'Cainemvhzc25+',
         'PORT' : 5432
     }
 }
