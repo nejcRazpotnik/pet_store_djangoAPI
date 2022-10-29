@@ -25,12 +25,16 @@ SECRET_KEY = 'django-insecure-%f4iz=p&exbg7o#k$p1t9@7v^k9-2t1ug(o5)fxek9)zh#!g5w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'rest_framework_swagger',
+    'api',
+    'animals',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +79,13 @@ WSGI_APPLICATION = 'petStore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pet_store',
+        'OPTIONS': {
+            'service': 'pet_store',
+        },
+        'PASSWORD': 'Cainemvhzc25+',
+        'PORT' : 5432
     }
 }
 

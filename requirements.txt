@@ -1,3 +1,5 @@
 django
 djangorestframework
 requests
+psycopg
+django-rest-swagger
