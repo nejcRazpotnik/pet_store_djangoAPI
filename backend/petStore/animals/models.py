@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -36,3 +37,9 @@ class Animal(models.Model):
     pictures = models.ManyToManyField(Picture_URLs, blank=True)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, to_field='status_name', null=True)
     tags = models.ManyToManyField(Tags, blank=True)
+
+
+class AnimalForm(ModelForm):
+    class Meta:
+        model = Animal
+        fields = ['name', 'category', 'pictures', 'status', 'status', 'tags']

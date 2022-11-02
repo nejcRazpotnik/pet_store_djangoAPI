@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
 
-from animals.models import Categories, Status, Tags, Animal
+from animals.models import Categories, Status, Tags, Animal, AnimalForm
 from api.serializers import AnimalSerializer
 
 from django.http import JsonResponse
@@ -27,7 +27,33 @@ class AnimalDetailAPIView(generics.RetrieveAPIView):
 api_pet_detailed_view = AnimalDetailAPIView.as_view()
 
 @api_view(['GET', 'DELETE', 'POST'])
-def api_pet_by_id(request, *args, **kwargs):
+def api_pet_by_id(request, pk=None, *args, **kwargs):
+    method = request.method
+    print(method)
+    print(pk)
+    if pk == None:
+        return Response(status=405)
+    animal = Animal.objects.filter(pk=pk)
+    animal = animal.first()
+    if method == 'GET': #use pk
+        if animal is not None:
+            data = AnimalSerializer(animal, many=False).data
+            print(data)
+            return Response(data, status=200)
+        return Response(status=404)
+    if method == 'DELETE': #use pk
+        if animal is not None:
+            data = AnimalSerializer(animal, many=False).data
+            animal.delete()
+            return Respone(data, status=200)
+        return Response(status=404)
+    if method == 'POST': # x-www-form-urlencoded
+        # serializer = AnimalSerializer(data=request.data)
+        form = AnimalForm(request.POST)
+        if form.is_valid(raise_exception=True):
+            instance = form.save() #in case of modification
+            return Response(form.data)
+    return Response(status=405)
     return
 
 # @api_view(['GET'])
@@ -48,7 +74,9 @@ def api_find_by_status(request, *args, **kwargs):
     #print(to_exclude)
     result = Animal.objects.exclude(status__in=to_exclude)
     #print(result)
-    return Response(list(result))
+    data = AnimalSerializer(result, many=True).data
+    #print(data)
+    return Response(list(data))
 
 @api_view(['POST'])
 def api_upload_picture(request, *args, **kwargs):

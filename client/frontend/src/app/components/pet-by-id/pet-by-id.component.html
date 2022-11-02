@@ -1,0 +1,29 @@
+<form>
+    <div>
+        <label for="id">ID</label>
+        <input type="text" name="id" [(ngModel)]="id" placeholder="Enter ID number">
+    </div>
+    <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" [(ngModel)]="name" placeholder="Enter name of pet">
+    </div>
+    <div>
+        <label for="category">Category</label>
+        <input type="text" name="category" [(ngModel)]="category" placeholder="Enter category">
+    </div>
+    <div>
+        <label for="status">Status</label>
+        <input type="radio" name="status" [(ngModel)]="status" placeholder="">
+    </div>
+    <div>
+        <label for="tags">Tags</label>
+        <input type="text" name="tags" [(ngModel)]="tags" placeholder="Enter comma seperated tags">
+    </div>
+</form>
+<app-pet pet="animal"></app-pet>
+
+<div>
+    <app-button text="Get" (buttonClick)="getPet(id)"></app-button>
+    <app-button *ngIf="animal" text="Post" (buttonClick)="postPet(animal)"></app-button>
+    <app-button *ngIf="animal" text="Delete" (buttonClick)="deletePet(animal)"></app-button>
+</div>
